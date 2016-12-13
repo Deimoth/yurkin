@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var hash = require('./pass').hash;
 var dbService = require('./db');
-var db = dbService.getDB;
-var users = dbService.getUsers;
+var db = dbService.getDB();
+var users = dbService.getUsers(db);
+var hash = require('./pass').hash;
 
 // config
 app.set('view engine', 'ejs');
@@ -32,35 +32,19 @@ app.use(function(req, res, next){
   next();
 });
 
-// when you create a user, generate a salt
-// and hash the password ('foobar' is the pass here)
-hash('yurkin', function(err, salt, hash){
-  if (err) throw err;
-  // store the salt & hash in the "db"
-  users.yurkin.salt = salt;
-  users.yurkin.hash = hash;
-});
-
-
-// Authenticate using our plain-object database of doom!
 function authenticate(name, pass, fn) {
   if (!module.parent) console.log('authenticating %s', name);
-  var user = users[name];
-  // query the db for the given username
-  if (!user) return fn(new Error('cannot find user'));
-  // apply the same algorithm to the POSTed password, applying
-  // the hash against the pass / salt, if there is a match we
-  // found the user
-  hash(pass, user.salt, function(err, hash){
-    if (err) {
-      return fn(err);
-    }
-    if (hash == user.hash) {
-      console.log('$s authenticated successfully', user);
-      return fn(null, user);
-    }
-    fn(new Error('invalid password'));
-  });
+  var user = users.find({'name': name});
+  if (!user) {
+    throw 'cannot find user';
+  }
+  var hash = hash(pass);
+  if (hash === user.password) {
+    console.log('$s authenticated successfully', user);
+    fn();
+  } else {
+    throw 'invalid password';
+  }
 }
 
 function restrict(req, res, next) {
@@ -92,6 +76,10 @@ app.get('/login', function(req, res){
   res.render('login');
 });
 
+app.get('/admin', function(req, res) {
+  res.render('admin');
+})
+
 app.post('/login', function(req, res){
   authenticate(req.body.username, req.body.password, function(err, user){
     if (user) {
@@ -114,6 +102,10 @@ app.post('/login', function(req, res){
     }
   });
 });
+
+app.get('/firstInit', function(req, res) {
+  dbService.insertUser(db, 'yurkin', 'yurkin', true);
+})
 
 app.listen(3000, function () {
   console.log('Yurkin started on port 3000');
