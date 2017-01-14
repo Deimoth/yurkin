@@ -1,26 +1,19 @@
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('mydb.db');
+var dbfile = 'mydb.db';
 
 var init = function() {
+  var db = new sqlite3.Database(dbfile);
   db.serialize(function() {
     db.run("CREATE TABLE if not exists USERS (fullname TEXT, login TEXT, password TEXT, admin INTEGER)");
     db.run("CREATE TABLE if not exists WODS (date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)")
   });
 }
 
-var close = function() {
-  db.close();
-}
-
 exports.initDB = function() {
   init();
 }
 
-exports.closeDB = function() {
-  close();
-}
-
-exports.getUserByLogin = function(login) {
+exports.getUserByLogin = function(login, cb) {
   if (!login) {
     return;
   }
@@ -30,7 +23,36 @@ exports.getUserByLogin = function(login) {
       for (var i = 0; i < row.length; i++) {
         users.push(row[i]);
       }
+      return cb(users);
+    } else {
+      return cb(null);
     }
   })
-  return users;
+}
+
+exports.createUser = function(fullname, login, password, admin, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "INSERT into USERS (fullname, login, password, admin) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ")";
+  db.run(query, function(err, row) {
+    if (err) {
+      return cb(err);
+    }
+    db.close();
+    return cb(row);
+  })
+}
+
+exports.getUsers = function(cb) {
+  var users = [];
+  var db = new sqlite3.Database(dbfile);
+  db.all("SELECT * FROM USERS", function(err, rows) {
+    if (err) {
+     return cb(err);
+    }
+    rows.forEach(function (row) {
+      users.push(row);
+    });
+    db.close();
+    return cb(users);
+  });
 }

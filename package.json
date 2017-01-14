@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Deimoth/yurkin#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "sqlite3": "~2.2.3"
   }
 }
