@@ -4,8 +4,8 @@ var dbfile = 'mydb.db';
 var init = function() {
   var db = new sqlite3.Database(dbfile);
   db.serialize(function() {
-    db.run("CREATE TABLE if not exists USERS (fullname TEXT, login TEXT, password TEXT, admin INTEGER)");
-    db.run("CREATE TABLE if not exists WODS (date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)")
+    db.run("CREATE TABLE if not exists USERS (id INTEGER, fullname TEXT, login TEXT, password TEXT, admin INTEGER)");
+    db.run("CREATE TABLE if not exists WODS (id INTEGER, date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)")
   });
 }
 
@@ -54,5 +54,32 @@ exports.getUsers = function(cb) {
     });
     db.close();
     return cb(users);
+  });
+}
+
+exports.login = function(login, password, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "SELECT * from USERS where login = '" + login + "' and password = '" + password + "'";
+  db.all(query, function(err, rows) {
+    var res;
+    var error;
+    var user;
+    if (err) {
+      res = false;
+      error = err;
+    }
+    if (rows && rows.length == 1) {
+      res = true;
+      user = rows[0];
+    } else {
+      res = false;
+      error = "Wrong login or password";
+    }
+    var result = {
+      'result': res,
+      'error': error,
+      'user': user
+    }
+    return cb(result);
   });
 }
