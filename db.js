@@ -32,13 +32,32 @@ exports.getUserByLogin = function(login, cb) {
 
 exports.createUser = function(fullname, login, password, admin, cb) {
   var db = new sqlite3.Database(dbfile);
-  var query = "INSERT into USERS (fullname, login, password, admin) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ")";
+  var query = "INSERT into USERS (fullname, login, password, admin, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", (SELECT max(id) from USERS) + 1)";
+  console.log(query);
   db.run(query, function(err, row) {
     if (err) {
+      if (err.toString().indexOf('UNIQUE constraint failed: USERS.login') >= 0) {
+        err = 'Ошибка: Неуникальное имя пользователя';
+      }
+      console.log(err);
       return cb(err);
     }
     db.close();
-    return cb(row);
+    return cb("OK");
+  })
+}
+
+exports.createWod = function(date, userId, content, comment, trainerId, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "INSERT into WODS (date, userid, content, comment, trainerid, id) values ('" + date + "'," + userId + ",'" + content + "','" + comment + "'," + trainerId + ", (SELECT max(id) from WODS) + 1)"
+  console.log(query);
+  db.run(query, function(err, row) {
+    if (err) {
+      console.log(err);
+      return cb(err);
+    }
+    db.close();
+    return cb("OK");
   })
 }
 

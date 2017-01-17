@@ -4,6 +4,7 @@ var db = require('./db');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+// --- USES
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -15,13 +16,27 @@ app.use(session({
   'saveUninitialized': true
 }));
 
+// --- CONFIG
+var loginFile = __dirname + '/front/views/login.html';
+var mainpageFile = __dirname + '/front/views/mainpage.html';
+var adminAddWodFile = __dirname + '/front/views/admin/admin-add-wod.html';
+var adminAddUserFile = __dirname + '/front/views/admin/admin-add-user.html';
+var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html'
+
+// --- GETS
 app.get('/', function(req, res) {
   res.redirect('/mainpage');
 })
 
+app.get('/getUsers', function(req, res) {
+  db.getUsers(function(result) {
+    res.send(result);
+  });
+})
+
 app.get('/login', function(req, res) {
   if (!req.session.user) {
-    res.sendFile(__dirname + '/front/login.html');
+    res.sendFile(loginFile);
   } else {
     res.redirect('/mainpage');
   }
@@ -31,10 +46,48 @@ app.get('/mainpage', function(req, res) {
   if (!req.session.user) {
     res.redirect('/login');
   } else {
-    res.sendFile(__dirname + '/front/mainpage.html');
+    res.sendFile(mainpageFile);
   }
 })
 
+app.get('/logout', function(req, res) {
+  req.session.destroy();
+  res.sendFile(loginFile);
+})
+
+app.get('/admin', function(req, res) {
+  if (!req.session.user || req.session.user.admin != 1) {
+    res.redirect('/login');
+  } else {
+    res.redirect('/admin/addWod');
+  }
+})
+
+app.get('/admin/addWod', function(req, res) {
+  if (!req.session.user || req.session.user.admin != 1) {
+    res.redirect('/login');
+  } else {
+    res.sendFile(adminAddWodFile);
+  }
+})
+
+app.get('/admin/addUser', function(req, res) {
+  if (!req.session.user || req.session.user.admin != 1) {
+    res.redirect('/login');
+  } else {
+    res.sendFile(adminAddUserFile);
+  }
+})
+
+app.get('/admin/viewWods', function(req, res) {
+  if (!req.session.user || req.session.user.admin != 1) {
+    res.redirect('/login');
+  } else {
+    res.sendFile(adminViewWodsFile);
+  }
+})
+
+// --- POSTS
 app.post('/login', function(req, res) {
   db.login(req.body.login, req.body.password, function(result) {
     if (result.result) {
@@ -44,21 +97,20 @@ app.post('/login', function(req, res) {
   });
 })
 
-app.get('/logout', function(req, res) {
-  delete req.session.user;
-  res.sendFile(__dirname + '/front/login.html');
-})
-
 app.post('/createUser', function(req, res) {
   db.createUser(req.body.fullname, req.body.login, req.body.password, req.body.admin, function(result) {
-    res.send(result);
+    if (result) {
+      res.send(result);
+    }
   });
 })
 
-app.get('/getUsers', function(req, res) {
-  db.getUsers(function(result) {
-    res.send(result);
-  });
+app.post('/createWod', function(req, res) {
+  db.createWod(req.body.date, req.body.userId, req.body.content, req.body.comment, req.body.trainerid, function(result) {
+    if (result) {
+      res.send(result);
+    }
+  })
 })
 
 app.listen(8080, function() {

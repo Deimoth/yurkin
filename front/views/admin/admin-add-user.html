@@ -1,9 +1,9 @@
 <head>
   <title>Админка - добавить WOD</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="../../controllers/utils.js"></script>
-    <script type="text/javascript" src="../../controllers/common.js"></script>
-    <script type="text/javascript" src="../../controllers/admin-add-user-controller.js"></script>
+    <script type="text/javascript" src="/front/controllers/utils.js"></script>
+    <script type="text/javascript" src="/front/controllers/common.js"></script>
+    <script type="text/javascript" src="/front/controllers/admin-add-user-controller.js"></script>
 </head>
 <body>
   <div id="header" class="header">
@@ -41,8 +41,7 @@
         </td>
         <td>
           <input id="user_password" type="text" />
-          <br />
-          <a href onclick="generatePassword()">Придумай за меня</a>
+          <input id="generatePassword_button" type="button" onclick="generatePassword()" value="Придумай за меня" />
         </td>
       </tr>
       <tr>
@@ -54,7 +53,8 @@
         </td>
       </tr>
     </table>
-    <a href onclick="addUser()">Добавить</a>
+    <input id="addUser_button" type="button" onclick="addUser()" value="Добавить" />
+    <span id="result_message"></span>
     </div>
   </div>
 </body>

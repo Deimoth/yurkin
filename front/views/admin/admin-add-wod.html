@@ -1,9 +1,9 @@
 <head>
   <title>Админка - добавить WOD</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="../../controllers/utils.js"></script>
-    <script type="text/javascript" src="../../controllers/common.js"></script>
-    <script type="text/javascript" src="../../controllers/admin-add-wod-controller.js"></script>
+    <script type="text/javascript" src="/front/controllers/utils.js"></script>
+    <script type="text/javascript" src="/front/controllers/common.js"></script>
+    <script type="text/javascript" src="/front/controllers/admin-add-wod-controller.js"></script>
 </head>
 <body>
   <div id="header" class="header">
@@ -26,9 +26,6 @@
         </td>
         <td>
           <select id="users_list">
-            <option />
-            <option>user1</option>
-            <option>user2</option>
           </select>
         </td>
       </tr>
@@ -57,6 +54,7 @@
         </td>
       </tr>
     </table>
-    <a href onclick="addWod()">Добавить</a>
+    <input id="addWod_button" type="button" onclick="addWod()" value="Добавить" />
+    <span id="result_message"></span>
   </div>
 </body>

@@ -6,3 +6,11 @@ var logout = function() {
     window.location.href = '/login';
   })
 }
+
+var getUsers = function(cb) {
+  doGet('/getUsers', function(users) {
+    if (users) {
+      return cb(users);
+    }
+  })
+}
