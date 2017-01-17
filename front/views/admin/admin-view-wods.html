@@ -1,0 +1,31 @@
+<head>
+  <title>Админка - просмотр WOD'ов</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../../controllers/utils.js"></script>
+    <script type="text/javascript" src="../../controllers/common.js"></script>
+    <script type="text/javascript" src="../../controllers/admin-view-wods-controller.js"></script>
+</head>
+<body>
+  <div id="header" class="header">
+    <div>
+      Вы вошли как %username%
+      <a href onclick="logout()" >выйти</a>
+    </div>
+    <div class="admin_menu">
+      <a href="/admin/addWod">Добавить WOD</a>
+      <a href="/admin/addUser">Добавить пользователя</a>
+      <a href="/admin/viewWods">Просмотр WOD'ов</a>
+    </div>
+  </div>
+  <div id="view_wods_form">
+    <select id="users_list">
+      <option />
+      <option>user1</option>
+      <option>user2</option>
+    </select>
+    <h4>Тренировки пользователя %username%:</h4>
+    <table class="wod_table">
+
+    </table>
+  </div>
+</body>

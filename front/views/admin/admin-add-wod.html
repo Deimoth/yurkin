@@ -1,0 +1,62 @@
+<head>
+  <title>Админка - добавить WOD</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../../controllers/utils.js"></script>
+    <script type="text/javascript" src="../../controllers/common.js"></script>
+    <script type="text/javascript" src="../../controllers/admin-add-wod-controller.js"></script>
+</head>
+<body>
+  <div id="header" class="header">
+    <div>
+      Вы вошли как %username%
+      <a href onclick="logout()" >выйти</a>
+    </div>
+    <div class="admin_menu">
+      <a href="/admin/addWod">Добавить WOD</a>
+      <a href="/admin/addUser">Добавить пользователя</a>
+      <a href="/admin/viewWods">Просмотр WOD'ов</a>
+    </div>
+  </div>
+  <div id="add_wod_form">
+    <h4>Добавить тренировку:</h4>
+    <table class="wod_table">
+      <tr>
+        <td>
+          Пользователь:
+        </td>
+        <td>
+          <select id="users_list">
+            <option />
+            <option>user1</option>
+            <option>user2</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Дата:
+        </td>
+        <td>
+          <input id="date" type="date" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Тренировка:
+        </td>
+        <td>
+          <textarea id="wod_content" type="text" rows="20" cols="30"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Комментарий:
+        </td>
+        <td>
+          <textarea id="wod_comment" type="text" rows="10" cols="30"></textarea>
+        </td>
+      </tr>
+    </table>
+    <a href onclick="addWod()">Добавить</a>
+  </div>
+</body>

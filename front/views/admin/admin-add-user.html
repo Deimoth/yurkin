@@ -1,0 +1,60 @@
+<head>
+  <title>Админка - добавить WOD</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../../controllers/utils.js"></script>
+    <script type="text/javascript" src="../../controllers/common.js"></script>
+    <script type="text/javascript" src="../../controllers/admin-add-user-controller.js"></script>
+</head>
+<body>
+  <div id="header" class="header">
+    <div>
+      Вы вошли как %username%
+      <a href onclick="logout()" >выйти</a>
+    </div>
+    <div class="admin_menu">
+      <a href="/admin/addWod">Добавить WOD</a>
+      <a href="/admin/addUser">Добавить пользователя</a>
+      <a href="/admin/viewWods">Просмотр WOD'ов</a>
+    </div>
+  </div>
+  <div id="add_user_form">
+    <h4>Добавить пользователя:</h4>
+    <table class="wod_table">
+      <tr>
+        <td>
+          Имя:
+        </td>
+        <td>
+          <input id="user_fullname" type="text" />
+        </td>
+      <tr>
+        <td>
+          Логин:
+        </td>
+        <td>
+          <input id="user_login" type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Пароль:
+        </td>
+        <td>
+          <input id="user_password" type="text" />
+          <br />
+          <a href onclick="generatePassword()">Придумай за меня</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Права администратора:
+        </td>
+        <td>
+          <input id="user_admin" type="checkbox" />
+        </td>
+      </tr>
+    </table>
+    <a href onclick="addUser()">Добавить</a>
+    </div>
+  </div>
+</body>
