@@ -21,7 +21,8 @@ var loginFile = __dirname + '/front/views/login.html';
 var mainpageFile = __dirname + '/front/views/mainpage.html';
 var adminAddWodFile = __dirname + '/front/views/admin/admin-add-wod.html';
 var adminAddUserFile = __dirname + '/front/views/admin/admin-add-user.html';
-var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html'
+var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html';
+var defaultPort = 8080;
 
 // --- GETS
 app.get('/', function(req, res) {
@@ -56,32 +57,40 @@ app.get('/logout', function(req, res) {
 })
 
 app.get('/admin', function(req, res) {
-  if (!req.session.user || req.session.user.admin != 1) {
+  if (!req.session.user) {
     res.redirect('/login');
+  } else if (req.session.user.admin != 1) {
+    res.redirect('/mainpage');
   } else {
     res.redirect('/admin/addWod');
   }
 })
 
 app.get('/admin/addWod', function(req, res) {
-  if (!req.session.user || req.session.user.admin != 1) {
+  if (!req.session.user) {
     res.redirect('/login');
+  } else if (req.session.user.admin != 1) {
+    res.redirect('/mainpage');
   } else {
     res.sendFile(adminAddWodFile);
   }
 })
 
 app.get('/admin/addUser', function(req, res) {
-  if (!req.session.user || req.session.user.admin != 1) {
+  if (!req.session.user) {
     res.redirect('/login');
+  } else if (req.session.user.admin != 1) {
+    res.redirect('/mainpage');
   } else {
     res.sendFile(adminAddUserFile);
   }
 })
 
 app.get('/admin/viewWods', function(req, res) {
-  if (!req.session.user || req.session.user.admin != 1) {
+  if (!req.session.user) {
     res.redirect('/login');
+  } else if (req.session.user.admin != 1) {
+    res.redirect('/mainpage');
   } else {
     res.sendFile(adminViewWodsFile);
   }
@@ -113,6 +122,7 @@ app.post('/createWod', function(req, res) {
   })
 })
 
-app.listen(8080, function() {
-  console.log('it works!');
+// --- SERVER
+app.listen(defaultPort, function() {
+  console.log('server run on port ' + defaultPort);
 });

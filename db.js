@@ -1,6 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var dbfile = 'mydb.db';
 
+// first initialize of database, use if needed
 var init = function() {
   var db = new sqlite3.Database(dbfile);
   db.serialize(function() {
@@ -13,23 +14,10 @@ exports.initDB = function() {
   init();
 }
 
-exports.getUserByLogin = function(login, cb) {
-  if (!login) {
-    return;
-  }
-  var users;
-  db.all("SELECT from USERS where login = " + login, function(err, row) {
-    if (row) {
-      for (var i = 0; i < row.length; i++) {
-        users.push(row[i]);
-      }
-      return cb(users);
-    } else {
-      return cb(null);
-    }
-  })
-}
-
+// create user function. params:
+// fullname, login (UNIQUE), password, admin (1/0) - fields
+// cb - callback function
+// id will be generated automatically
 exports.createUser = function(fullname, login, password, admin, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "INSERT into USERS (fullname, login, password, admin, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", (SELECT max(id) from USERS) + 1)";
@@ -47,6 +35,10 @@ exports.createUser = function(fullname, login, password, admin, cb) {
   })
 }
 
+// create WOD function. params:
+// date, userId, content, comment, trainerId (NOT USED NOW, MAYBE LATER..) - fields
+// cb - callback function
+// id will be generated automatically
 exports.createWod = function(date, userId, content, comment, trainerId, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "INSERT into WODS (date, userid, content, comment, trainerid, id) values ('" + date + "'," + userId + ",'" + content + "','" + comment + "'," + trainerId + ", (SELECT max(id) from WODS) + 1)"
@@ -61,6 +53,8 @@ exports.createWod = function(date, userId, content, comment, trainerId, cb) {
   })
 }
 
+// get all users
+// cb - callback function
 exports.getUsers = function(cb) {
   var users = [];
   var db = new sqlite3.Database(dbfile);
@@ -76,6 +70,9 @@ exports.getUsers = function(cb) {
   });
 }
 
+// simple authorization. params:
+// login
+// password - as HASH
 exports.login = function(login, password, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "SELECT * from USERS where login = '" + login + "' and password = '" + password + "'";
