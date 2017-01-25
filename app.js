@@ -113,6 +113,14 @@ app.post('/createWod', function(req, res) {
   })
 })
 
+app.post('/getWods', function(req, res) {
+  db.getWods(req.body.userId, req.body.period, function (result) {
+    if (result) {
+      res.send(result);
+    }
+  })
+})
+
 app.listen(8080, function() {
   console.log('it works!');
 });

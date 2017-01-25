@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var dbfile = 'mydb.db';
+var moment = require('moment');
 
 var init = function() {
   var db = new sqlite3.Database(dbfile);
@@ -99,6 +100,28 @@ exports.login = function(login, password, cb) {
       'error': error,
       'user': user
     }
+    db.close();
     return cb(result);
   });
+}
+
+exports.getWods(userId, period, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var endDate = moment(new Date()).format('YYYY-mm-DD');
+  var startDate = moment(new Date()).substract(period, 'days').format('YYYY-mm-DD');
+  var query = "SELECT * from WODS where userId = " + userId + " and date between '" + startDate + "' and '" + endDate + "' order by date asc";
+  console.log(query);
+  db.all(query, function(err, rows) {
+    if (err) {
+      console.log(err);
+      return cb(err);
+    }
+    if (rows) {
+      var wods = [];
+      rows.forEach(function(row) {
+        wods.push(row);
+      })
+      return cb(wods);
+    }
+  })
 }

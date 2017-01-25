@@ -14,3 +14,15 @@ var getUsers = function(cb) {
     }
   })
 }
+
+// period - last N days
+var getWods(userId, period, cb) {
+  if (userId == null || period == null) {
+    return [];
+  }
+  var params = 'userId=' + userId +
+    '&period=' + period;
+  doPost('/getWods', params, function(wods) {
+    return cb(wods);
+  })
+}
