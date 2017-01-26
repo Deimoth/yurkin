@@ -1,0 +1,117 @@
+body {
+  font-size: 18px;
+  font-family: sans-serif;
+  background-color: #eaeaea;
+}
+
+textarea {
+  font-size: 18px;
+}
+
+input {
+  font-family: inherit;
+}
+
+.button {
+  box-shadow: rgb(255, 255, 255) 0px 1px 0px 0px inset;
+  background: linear-gradient(rgb(249, 249, 249) 5%, rgb(233, 233, 233) 100%) rgb(249, 249, 249);
+  border-radius: 6px;
+  border: 1px solid rgb(220, 220, 220);
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(102, 102, 102);
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
+.button_add {
+  box-shadow: rgb(164, 226, 113) 0px 1px 0px 0px inset;
+  background: linear-gradient(rgb(137, 196, 3) 5%, rgb(119, 168, 9) 100%) rgb(137, 196, 3);
+  border-radius: 6px;
+  border: 1px solid rgb(116, 184, 7);
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: rgb(82, 128, 9) 0px 1px 0px;
+}
+
+.login_form {
+  position: absolute;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 10px;
+  width: 400px;
+  text-align: center;
+  background-color: #fff68c;
+}
+
+.login_form p {
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  font-weight: bolder;;
+}
+
+.view_wods_form {
+  position: absolute;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 10px;
+  width: 750px;
+  text-align: center;
+}
+
+.add_wod_form {
+  position: absolute;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 10px;
+  width: 750px;
+  text-align: center;
+}
+
+.add_user_form {
+  position: absolute;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 10px;
+  width: 750px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+td {
+  vertical-align: top;
+}
+
+table.wod_table {
+  border-collapse: collapse;;
+}
+
+.header {
+  text-align: right;
+  background-color: #fff68c;
+  padding: 10px;
+}
+
+a:link {
+  color: #a53b3b;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #a53b3b;
+  text-decoration: underline;
+}

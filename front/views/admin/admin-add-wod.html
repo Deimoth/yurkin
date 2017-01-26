@@ -4,6 +4,7 @@
     <script type="text/javascript" src="/front/controllers/utils.js"></script>
     <script type="text/javascript" src="/front/controllers/common.js"></script>
     <script type="text/javascript" src="/front/controllers/admin-add-wod-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
   <div id="header" class="header">
@@ -17,8 +18,8 @@
       <a href="/admin/viewWods">Просмотр WOD'ов</a>
     </div>
   </div>
-  <div id="add_wod_form">
-    <h4>Добавить тренировку:</h4>
+  <div id="add_wod_form" class="add_wod_form">
+    <h4>Добавить WOD:</h4>
     <table class="wod_table">
       <tr>
         <td>
@@ -42,7 +43,7 @@
           Тренировка:
         </td>
         <td>
-          <textarea id="wod_content" type="text" rows="20" cols="30"></textarea>
+          <textarea id="wod_content" type="text" rows="20" cols="60"></textarea>
         </td>
       </tr>
       <tr>
@@ -50,11 +51,11 @@
           Комментарий:
         </td>
         <td>
-          <textarea id="wod_comment" type="text" rows="10" cols="30"></textarea>
+          <textarea id="wod_comment" type="text" rows="5" cols="60"></textarea>
         </td>
       </tr>
     </table>
-    <input id="addWod_button" type="button" onclick="addWod()" value="Добавить" />
-    <span id="result_message"></span>
+    <input id="addWod_button" type="button" onclick="addWod()" value="Добавить" class="button_add" />
+    <p><span id="result_message"></span><span id="error_message" class="error"></span></p>
   </div>
 </body>

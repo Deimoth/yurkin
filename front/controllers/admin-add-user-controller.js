@@ -1,8 +1,15 @@
 var addUser = function() {
+  $("span[id='error_message']")[0].class = '';
+  $("span[id='error_message']")[0].innerHTML = '';
   var fullname = $("input[id='user_fullname']")[0].value;
   var login = $("input[id='user_login']")[0].value;
   var password = $("input[id='user_password']")[0].value;
   var admin = $("input[id='user_admin']")[0].checked;
+  if (fullname.length == 0 || login.length == 0 || password.length == 0) {
+    $("span[id='error_message']")[0].class = 'error';
+    $("span[id='error_message']")[0].innerHTML = "Какое-то поле не заполнено, не надо так"
+    return;
+  }
   var params = 'fullname=' + fullname +
     '&login=' + login +
     '&password=' + easyHash(password) +

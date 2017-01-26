@@ -30,6 +30,12 @@ app.get('/', function(req, res) {
   res.redirect('/mainpage');
 })
 
+app.get('/removeuser', function(req, res) {
+  db.removeUser(req.query.login, function(result) {
+    res.send(result);
+  })
+})
+
 app.get('/getUsers', function(req, res) {
   db.getUsers(function(result) {
     res.send(result);

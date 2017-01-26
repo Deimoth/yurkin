@@ -3,7 +3,7 @@ var afterLoad = function() {
   getUsers(function(users) {
     var list = JSON.parse(users);
     for (var i = 0; i < list.length; i++) {
-      usersList.options[i] = new Option(list[i].fullname, list[i].id);
+      usersList.options[i] = new Option(list[i].fullname + ' (' + list[i].login + ')', list[i].id);
     }
   })
 }
@@ -11,7 +11,7 @@ var afterLoad = function() {
 var userSelected = function() {
   var userIndex = $('#users_list')[0].selectedIndex;
   var userId = $('#users_list')[0].options[userIndex].value * 1;
-  getWods(userId, false);
+  getWods(userId, true);
 }
 
 window.onload = function() {

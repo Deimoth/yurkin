@@ -21,11 +21,14 @@ var getWods = function(userId, needComment) {
   doPost('/getWods', params, function(wods) {
     wods = JSON.parse(wods);
     var wodTable = $('#wod_table tbody');
+    wodTable.empty();
     if (wods.length > 0) {
       wods.forEach(function(wod) {
-        var wodString = '<tr><td>' + wod.date + '</td><td><textarea type="text" rows="20" cols="30" readonly>' + wod.content + '</textarea></td>';
+        var wodString = '<tr><td>' + wod.date + '</td><td><textarea type="text" rows="20" cols="60" readonly>' + wod.content + '</textarea>';
         if (needComment) {
-          wodString += '<td><textarea type="text" rows="20" cols="30" readonly>' + wod.comment + '</textarea></td>';
+          wodString += '<br />Комментарий:<br /><textarea type="text" rows="5" cols="60" readonly>' + wod.comment + '</textarea></td>';
+        } else {
+          wodString += '</td>'
         }
         wodString += '</tr>';
         wodTable.append(wodString);
@@ -38,7 +41,13 @@ var getWods = function(userId, needComment) {
 
 var commonAfterLoad = function() {
   var userName = $("#login_user_name")[0];
-  if (userName && localStorage['user.login']) {
-    userName.innerHTML = localStorage['user.login'];
+  if (userName && localStorage['user.fullname']) {
+    userName.innerHTML = localStorage['user.fullname'];
   }
 }
+
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});

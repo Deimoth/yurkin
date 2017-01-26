@@ -4,6 +4,7 @@
     <script type="text/javascript" src="/front/controllers/utils.js"></script>
     <script type="text/javascript" src="/front/controllers/common.js"></script>
     <script type="text/javascript" src="/front/controllers/admin-add-user-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
   <div id="header" class="header">
@@ -17,7 +18,7 @@
       <a href="/admin/viewWods">Просмотр WOD'ов</a>
     </div>
   </div>
-  <div id="add_user_form">
+  <div id="add_user_form" class="add_user_form">
     <h4>Добавить пользователя:</h4>
     <table class="wod_table">
       <tr>
@@ -41,7 +42,7 @@
         </td>
         <td>
           <input id="user_password" type="text" />
-          <input id="generatePassword_button" type="button" onclick="generatePassword()" value="Придумай за меня" />
+          <input id="generatePassword_button" type="button" onclick="generatePassword()" value="Придумай за меня" class="button" />
         </td>
       </tr>
       <tr>
@@ -53,8 +54,8 @@
         </td>
       </tr>
     </table>
-    <input id="addUser_button" type="button" onclick="addUser()" value="Добавить" />
-    <span id="result_message"></span>
+    <input id="addUser_button" type="button" onclick="addUser()" value="Добавить" class="button_add" />
+    <p><span id="result_message"></span><span id="error_message" class="error"></span></p>
     </div>
   </div>
 </body>

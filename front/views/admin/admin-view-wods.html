@@ -4,6 +4,7 @@
     <script type="text/javascript" src="/front/controllers/utils.js"></script>
     <script type="text/javascript" src="/front/controllers/common.js"></script>
     <script type="text/javascript" src="/front/controllers/admin-view-wods-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
   <div id="header" class="header">
@@ -17,7 +18,7 @@
       <a href="/admin/viewWods">Просмотр WOD'ов</a>
     </div>
   </div>
-  <div id="view_wods_form">
+  <div id="view_wods_form" class="view_wods_form">
     Тренировки пользователя
     <select id="users_list" onchange="userSelected()"></select>
     <table class="wod_table" id="wod_table">

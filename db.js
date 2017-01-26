@@ -46,6 +46,7 @@ exports.createWod = function(date, userId, content, comment, trainerId, cb) {
   console.log(query);
   db.run(query, function(err, row) {
     if (err) {
+      db.close();
       console.log(err);
       return cb(err);
     }
@@ -61,7 +62,8 @@ exports.getUsers = function(cb) {
   var db = new sqlite3.Database(dbfile);
   db.all("SELECT * FROM USERS", function(err, rows) {
     if (err) {
-     return cb(err);
+      db.close();
+      return cb(err);
     }
     rows.forEach(function (row) {
       users.push(row);
@@ -84,13 +86,16 @@ exports.login = function(login, password, cb) {
     if (err) {
       res = false;
       error = err;
+      console.log('login as', login, 'FAIL: ', err);
     }
     if (rows && rows.length == 1) {
       res = true;
       user = rows[0];
+      console.log('login as', login, 'success');
     } else {
       res = false;
       error = "Wrong login or password";
+      console.log('login as', login, 'FAIL: Wrong login or password');
     }
     var result = {
       'result': res,
@@ -109,11 +114,12 @@ exports.getWods = function(userId, period, cb) {
   console.log('endDate', endDate);
   var startDate = moment().subtract(period, 'days').format('YYYY-MM-DD');
   console.log('startDate', startDate);
-  var query = "SELECT * from WODS where userId = " + userId + " and date between '" + startDate + "' and '" + endDate + "' order by date asc";
+  var query = "SELECT * from WODS where userId = " + userId + " and date between '" + startDate + "' and '" + endDate + "' order by date desc";
   console.log(query);
   db.all(query, function(err, rows) {
     if (err) {
       console.log(err);
+      db.close();
       return cb(err);
     }
     if (rows) {
@@ -121,7 +127,25 @@ exports.getWods = function(userId, period, cb) {
       rows.forEach(function(row) {
         wods.push(row);
       })
+      db.close();
       return cb(wods);
+    }
+  })
+}
+
+exports.removeUser = function(login, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "DELETE from USERS where login = '" + login + "'";
+  console.log(query);
+  db.run(query, function(err, rows) {
+    if (err) {
+      db.close();
+      console.log('FAILED to delete user', login, err);
+      return cb(err);
+    } else {
+      db.close();
+      console.log('user deleted', login);
+      return cb(true);
     }
   })
 }
