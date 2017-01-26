@@ -51,7 +51,7 @@ input {
   padding: 10px;
   width: 400px;
   text-align: center;
-  background-color: #fff68c;
+  background-color: #a4e271;
 }
 
 .login_form p {
@@ -102,16 +102,20 @@ table.wod_table {
 
 .header {
   text-align: right;
-  background-color: #fff68c;
+  background-color: #a4e271;
   padding: 10px;
 }
 
-a:link {
-  color: #a53b3b;
-  text-decoration: underline;
+.admin_menu {
+  text-align: center;
+  background-color: #a4e271;
 }
 
-a:visited {
-  color: #a53b3b;
-  text-decoration: underline;
+a {
+  color: #ffffff;
+  text-decoration: overline;;
+  font-size: 15px;
+  font-weight: bold;
+  text-shadow: rgb(82, 128, 9) 0px 1px 0px;
+  font-family: inherit;
 }

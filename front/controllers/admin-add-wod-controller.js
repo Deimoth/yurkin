@@ -17,7 +17,7 @@ var addWod = function() {
   var date = $("input[id='date']")[0].value;
   var content = $("textarea[id='wod_content']")[0].value;
   var comment = $("textarea[id='wod_comment']")[0].value;
-  if (content.length == 0) {
+  if (content.length == 0 || date.length == 0) {
     $("span[id='error_message']")[0].class = 'error';
     $("span[id='error_message']")[0].innerHTML = "Какое-то поле не заполнено, не надо так"
     return;
