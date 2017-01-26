@@ -8,7 +8,7 @@
 <body>
   <div id="header" class="header">
     <div>
-      Вы вошли как %username%
+      Вы вошли как <b><span id="login_user_name"></span></b>
       <a href onclick="logout()" >выйти</a>
     </div>
     <div class="admin_menu">
@@ -18,14 +18,11 @@
     </div>
   </div>
   <div id="view_wods_form">
-    <select id="users_list">
-      <option />
-      <option>user1</option>
-      <option>user2</option>
-    </select>
-    <h4>Тренировки пользователя %username%:</h4>
-    <table class="wod_table">
-
+    Тренировки пользователя
+    <select id="users_list" onchange="userSelected()"></select>
+    <table class="wod_table" id="wod_table">
+      <tbody>
+      </tbody>
     </table>
   </div>
 </body>

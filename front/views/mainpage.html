@@ -1,7 +1,22 @@
 <head>
-  <title>MAINPAGE</title>
-   <script type="text/javascript" src="front/scripts.js"></script>
+  <title>Ваши тренировки</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="/front/controllers/utils.js"></script>
+  <script type="text/javascript" src="/front/controllers/common.js"></script>
+  <script type="text/javascript" src="/front/controllers/mainpage-controller.js"></script>
 </head>
 <body>
-  <a href onclick="logout()" >logout</a>
+  <div id="header" class="header">
+    <div>
+      Вы вошли как <b><span id="login_user_name"></span></b>
+      <a href onclick="logout()" >выйти</a>
+    </div>
+  </div>
+  <div id="view_wods_form">
+    Ваши тренировки за последние 7 дней:
+    <table class="wod_table" id="wod_table">
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </body>

@@ -32,3 +32,7 @@ var generatePassword = function() {
   }
   password.value = string;
 }
+
+window.onload = function() {
+  commonAfterLoad();
+}

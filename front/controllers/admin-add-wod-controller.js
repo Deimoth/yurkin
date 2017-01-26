@@ -33,5 +33,6 @@ var addWod = function() {
 }
 
 window.onload = function() {
+  commonAfterLoad();
   afterLoad();
 }
