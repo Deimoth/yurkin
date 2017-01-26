@@ -102,10 +102,13 @@ exports.login = function(login, password, cb) {
   });
 }
 
-exports.getWods(userId, period, cb) {
+exports.getWods = function(userId, period, cb) {
   var db = new sqlite3.Database(dbfile);
+  console.log('period', period);
   var endDate = moment(new Date()).format('YYYY-mm-DD');
+  console.log('endDate', endDate);
   var startDate = moment(new Date()).substract(period, 'days').format('YYYY-mm-DD');
+  console.log('startDate', startDate);
   var query = "SELECT * from WODS where userId = " + userId + " and date between '" + startDate + "' and '" + endDate + "' order by date asc";
   console.log(query);
   db.all(query, function(err, rows) {

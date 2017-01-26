@@ -122,7 +122,6 @@ app.post('/createWod', function(req, res) {
   })
 })
 
-<<<<<<< HEAD
 app.post('/getWods', function(req, res) {
   db.getWods(req.body.userId, req.body.period, function (result) {
     if (result) {
@@ -131,11 +130,7 @@ app.post('/getWods', function(req, res) {
   })
 })
 
-app.listen(8080, function() {
-  console.log('it works!');
-=======
 // --- SERVER
 app.listen(defaultPort, function() {
   console.log('server run on port ' + defaultPort);
->>>>>>> 988351384be07119eaee8fdeda8978f7dde13d05
 });
