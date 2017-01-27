@@ -11,7 +11,11 @@ var login = function(login, password) {
       localStorage.setItem('user.id', result.user.id);
       localStorage.setItem('user.admin', result.user.admin);
       localStorage.setItem('user.fullname', result.user.fullname);
-      window.location.href = '/mainpage';
+      if (result.user.admin) {
+        window.location.href = '/admin';
+      } else {
+        window.location.href = '/mainpage';
+      }
     } else {
       $('#result_message').text(result.error);
     }
