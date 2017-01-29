@@ -4,20 +4,55 @@
   <script type="text/javascript" src="/front/controllers/utils.js"></script>
   <script type="text/javascript" src="/front/controllers/common.js"></script>
   <script type="text/javascript" src="/front/controllers/mainpage-controller.js"></script>
+  <link rel="stylesheet" type="text/css" href="/front/styles/font-awesome.min.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="/front/fonts/lato.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="/front/styles/grid.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
+  <div class="login_bg"></div>
   <div id="header" class="header">
-    <div>
-      Вы вошли как <b><span id="login_user_name"></span></b>
-      <a href onclick="logout()" >выйти</a>
+    <div class="header_login-panel">
+      <a href onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Выйти</a>
+      <span id="login_user_name"></span>
     </div>
   </div>
-  <div id="view_wods_form" class="view_wods_form">
-    Ваши тренировки за последние 7 дней:
-    <table class="wod_table" id="wod_table">
-      <tbody>
-      </tbody>
-    </table>
+
+  <h1 class="page_title">Ваши тренировки за последние 7 дней</h1>
+  <div class="container">
+    <div class="row">
+      <div id="view_wods_form" class="view_wods_form">
+        <table class="wod_table">
+          <colgroup>
+            <col width="110">
+            <col>
+          </colgroup>
+          <tbody>
+            <tr>
+              <td><label>Дата</label></td>
+              <td><label>Описание</label></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="wod_table visible-sm visible-xs" id="wod_table">
+          <colgroup>
+            <col width="110">
+            <col>
+          </colgroup>
+          <tbody>
+          </tbody>
+        </table>
+        <div class="scroll-box hidden-sm hidden-xs">
+          <table class="wod_table" id="wod_table">
+            <colgroup>
+              <col width="110">
+              <col>
+            </colgroup>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </body>

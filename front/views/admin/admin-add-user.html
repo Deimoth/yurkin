@@ -4,58 +4,69 @@
     <script type="text/javascript" src="/front/controllers/utils.js"></script>
     <script type="text/javascript" src="/front/controllers/common.js"></script>
     <script type="text/javascript" src="/front/controllers/admin-add-user-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/font-awesome.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/fonts/lato.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/styles/grid.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
+  <div class="login_bg"></div>
   <div id="header" class="header">
-    <div>
-      Вы вошли как <b><span id="login_user_name"></span></b>
-      <a href onclick="logout()" >выйти</a>
+    <div class="header_login-panel">
+      <a href onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Выйти</a>
+      <span id="login_user_name"></span>
     </div>
-    <div class="admin_menu">
-      <a href="/admin/addWod">Добавить WOD</a>
-      <a href="/admin/addUser">Добавить пользователя</a>
-      <a href="/admin/viewWods">Просмотр WOD'ов</a>
+    <div class="admin_menu hidden-xs">
+      <a href="/admin/addWod"><i class="fa fa-file" aria-hidden="true"></i>Добавить WOD</a>
+      <a href="/admin/addUser" class="active"><i class="fa fa-user-plus" aria-hidden="true"></i>Добавить пользователя</a>
+      <a href="/admin/viewWods"><i class="fa fa-list-alt" aria-hidden="true"></i>Просмотр WOD'ов</a>
     </div>
   </div>
+  <div class="menu-mobile admin_menu visible-xs">
+    <a href="/admin/addWod" title="Добавить WOD"><i class="fa fa-file" aria-hidden="true"></i></a>
+    <a href="/admin/addUser" title="Добавить пользователя" class="active"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+    <a href="/admin/viewWods" title="Просмотр WOD'ов"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+  </div>
+
+  <h1 class="page_title">Новый пользователь</h1>
+
   <div id="add_user_form" class="add_user_form">
-    <h4>Добавить пользователя:</h4>
     <table class="wod_table">
-      <tr>
-        <td>
-          Имя:
-        </td>
-        <td>
-          <input id="user_fullname" type="text" />
-        </td>
-      <tr>
-        <td>
-          Логин:
-        </td>
-        <td>
-          <input id="user_login" type="text" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Пароль:
-        </td>
-        <td>
-          <input id="user_password" type="text" />
-          <input id="generatePassword_button" type="button" onclick="generatePassword()" value="Придумай за меня" class="button" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Права администратора:
-        </td>
-        <td>
-          <input id="user_admin" type="checkbox" />
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <input id="user_fullname" type="text" placeholder="Имя" />
+          </td>
+        <tr>
+          <td colspan="2">
+            <input id="user_login" type="text" placeholder="Логин" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input id="user_password" type="text" placeholder="Пароль" />
+          </td>
+          <td align="center" valign="middle">            
+            <input id="generatePassword_button" type="button" onclick="generatePassword()" value="Придумай за меня" class="button" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="left">
+            <input id="user_admin" type="checkbox" />
+            <label for="user_admin">Права администратора</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input id="addUser_button" type="button" onclick="addUser()" value="Добавить" class="button_add" />
+          </td>
+        </tr>
+      </tbody>      
     </table>
-    <input id="addUser_button" type="button" onclick="addUser()" value="Добавить" class="button_add" />
-    <p><span id="result_message"></span><span id="error_message" class="error"></span></p>
-    </div>
+  </div>
+  <div class="message-block">
+    <span id="result_message"></span>
+    <span id="error_message" class="error"></span>
+    <i class="fa fa-close" aria-hidden="true" onclick="closeMessage()"></i>
   </div>
 </body>
