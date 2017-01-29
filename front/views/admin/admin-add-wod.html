@@ -4,58 +4,107 @@
     <script type="text/javascript" src="/front/controllers/utils.js"></script>
     <script type="text/javascript" src="/front/controllers/common.js"></script>
     <script type="text/javascript" src="/front/controllers/admin-add-wod-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/font-awesome.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/fonts/lato.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/styles/grid.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
 </head>
 <body>
+  <div class="login_bg"></div>
   <div id="header" class="header">
-    <div>
-      Вы вошли как <b><span id="login_user_name"></span></b>
-      <a href onclick="logout()" >выйти</a>
+    <div class="header_login-panel">
+      <a href onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Выйти</a>
+      <span id="login_user_name"></span>
     </div>
-    <div class="admin_menu">
-      <a href="/admin/addWod">Добавить WOD</a>
-      <a href="/admin/addUser">Добавить пользователя</a>
-      <a href="/admin/viewWods">Просмотр WOD'ов</a>
+    <div class="admin_menu hidden-xs">
+      <a href="/admin/addWod"  class="active"><i class="fa fa-file" aria-hidden="true"></i>Добавить WOD</a>
+      <a href="/admin/addUser"><i class="fa fa-user-plus" aria-hidden="true"></i>Добавить пользователя</a>
+      <a href="/admin/viewWods"><i class="fa fa-list-alt" aria-hidden="true"></i>Просмотр WOD'ов</a>
     </div>
   </div>
+  <div class="menu-mobile admin_menu visible-xs">
+    <a href="/admin/addWod" title="Добавить WOD"  class="active"><i class="fa fa-file" aria-hidden="true"></i></a>
+    <a href="/admin/addUser" title="Добавить пользователя"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+    <a href="/admin/viewWods" title="Просмотр WOD'ов"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+  </div>
+
+  <h1 class="page_title">WOD</h1>
+
   <div id="add_wod_form" class="add_wod_form">
-    <h4>Добавить WOD:</h4>
-    <table class="wod_table">
-      <tr>
-        <td>
-          Пользователь:
-        </td>
-        <td>
-          <select id="users_list">
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Дата:
-        </td>
-        <td>
-          <input id="date" type="date" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Тренировка:
-        </td>
-        <td>
-          <textarea id="wod_content" type="text" rows="20" cols="60"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Комментарий:
-        </td>
-        <td>
-          <textarea id="wod_comment" type="text" rows="5" cols="60"></textarea>
-        </td>
-      </tr>
-    </table>
-    <input id="addWod_button" type="button" onclick="addWod()" value="Добавить" class="button_add" />
-    <p><span id="result_message"></span><span id="error_message" class="error"></span></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <table class="wod_table">
+            <tbody>
+              <tr>
+                <td>
+                  <label for="users_list">Пользователь</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <select id="users_list">
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="date">Дата</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input id="date" type="date" />
+                </td>
+              </tr>
+            </tbody>
+          </table> 
+        </div>
+        <div class="col-md-9">
+          <table class="wod_table">
+            <tbody>
+              <tr>
+                <td>
+                  <label for="wod_content">Тренировка</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea id="wod_content" type="text" rows="16" cols="60"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="wod_comment">Комментарий</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea id="wod_comment" type="text" rows="4" cols="60"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-10 col-md-2">
+          <table class="wod_table">
+            <tbody>
+              <tr>
+                <td align="right">
+                  <input id="addWod_button" type="button" onclick="addWod()" value="Добавить" class="button_add" style="margin: 0;"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="message-block">
+    <span id="result_message"></span>
+    <span id="error_message" class="error"></span>
+    <i class="fa fa-close" aria-hidden="true" onclick="closeMessage()"></i>
   </div>
 </body>

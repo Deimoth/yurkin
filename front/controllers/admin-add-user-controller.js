@@ -6,6 +6,8 @@ var addUser = function() {
   var password = $("input[id='user_password']")[0].value;
   var admin = $("input[id='user_admin']")[0].checked;
   if (fullname.length == 0 || login.length == 0 || password.length == 0) {
+    $('.message-block').show();
+    $('.message-block').addClass('message-error');
     $("span[id='error_message']")[0].class = 'error';
     $("span[id='error_message']")[0].innerHTML = "Какое-то поле не заполнено, не надо так"
     return;
@@ -25,8 +27,17 @@ var addUser = function() {
     } else {
       result_message = res;
     }
+
+    $('.message-block').show();
+    $('.message-block').addClass('message-success');
     $("span[id='result_message']")[0].innerHTML = result_message;
   })
+}
+
+var closeMessage = function() {
+  $('.message-block').removeClass('message-success');
+  $('.message-block').removeClass('message-error');
+  $('.message-block').hide();
 }
 
 var generatePassword = function() {

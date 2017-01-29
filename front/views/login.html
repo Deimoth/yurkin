@@ -4,15 +4,47 @@
       <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
       <script type="text/javascript" src="/front/controllers/utils.js"></script>
       <script type="text/javascript" src="/front/controllers/login-controller.js"></script>
+      <link rel="stylesheet" type="text/css" href="/front/styles/font-awesome.min.css" media="screen" />
+      <link rel="stylesheet" type="text/css" href="/front/fonts/lato.css" media="screen" />
+      <link rel="stylesheet" type="text/css" href="/front/styles/grid.css" media="screen" />
       <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
   </head>
-  <body>
-    <div class="login_form" id="login_form">
-      <p>Пожалуйста, войдите</p>
-      <p>Логин: <input id="login_text" type="text" /></p>
-      <p>Пароль: <input id="password_text" type="password" /></p>
-      <p><input id="login_button" type="button" onclick="login()" value="Войти" class="button" /></p>
-      <p><span id="result_message" class="error"></span></p>
+  <body class="login_body">    
+    <div class="login_bg"></div>
+    <div class="login_container">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="login_adv">
+            <h1>Yurkin</h1>
+          </div>          
+        </div>
+        <div class="col-lg-offset-2 col-lg-6 col-md-8 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="login_adv">
+            <h4>training</h4>
+          </div>
+        </div>
+        <div class="col-lg-offset-2 col-lg-6 col-md-8 col-sm-12">
+          <div class="login_form" id="login_form">
+            <h2>Не пропусти свои тренировки</h2>
+            <div class="from_body">
+              <input id="login_text" type="text" placeholder="Логин" />
+              <input id="password_text" type="password" placeholder="Пароль" />
+            </div>            
+            <footer>
+              <input id="login_button" type="submit" onclick="login()" value="Войти" class="button" />
+            </footer>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="message-block">
+      <span id="result_message" class="error"></span>
+      <i class="fa fa-close" aria-hidden="true" onclick="closeMessage()"></i>
     </div>
   </body>
 </html>

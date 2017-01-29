@@ -5,12 +5,14 @@ var afterLoad = function() {
     for (var i = 0; i < list.length; i++) {
       usersList.options[i] = new Option(list[i].fullname + ' (' + list[i].login + ')', list[i].id);
     }
+    
+    userSelected();
   })
 }
 
 var userSelected = function() {
   var userIndex = $('#users_list')[0].selectedIndex;
-  var userId = $('#users_list')[0].options[userIndex].value * 1;
+  var userId = $('#users_list')[0].options[userIndex].value * 1;  
   getWods(userId, true);
 }
 

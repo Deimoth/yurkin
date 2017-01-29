@@ -94,7 +94,7 @@ exports.login = function(login, password, cb) {
       console.log('login as', login, 'success');
     } else {
       res = false;
-      error = "Wrong login or password";
+      error = "Неверный логин или пароль";
       console.log('login as', login, 'FAIL: Wrong login or password');
     }
     var result = {
