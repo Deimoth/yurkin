@@ -17,7 +17,20 @@ var login = function(login, password) {
         window.location.href = '/mainpage';
       }
     } else {
+      $('.message-block').show();
+      $('.message-block').addClass('message-error');
       $('#result_message').text(result.error);
     }
   })
+}
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        login();
+    }
+});
+
+var closeMessage = function() {
+  $('.message-block').removeClass('message-error');
+  $('.message-block').hide();
 }

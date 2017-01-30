@@ -18,6 +18,8 @@ var addWod = function() {
   var content = $("textarea[id='wod_content']")[0].value;
   var comment = $("textarea[id='wod_comment']")[0].value;
   if (content.length == 0 || date.length == 0) {
+    $('.message-block').show();
+    $('.message-block').addClass('message-error');
     $("span[id='error_message']")[0].class = 'error';
     $("span[id='error_message']")[0].innerHTML = "Какое-то поле не заполнено, не надо так"
     return;
@@ -36,6 +38,8 @@ var addWod = function() {
     } else {
       result_message = result;
     }
+    $('.message-block').show();
+    $('.message-block').addClass('message-success');
     $("span[id='result_message']")[0].innerHTML = result_message;
   })
 }
@@ -43,4 +47,10 @@ var addWod = function() {
 window.onload = function() {
   commonAfterLoad();
   afterLoad();
+}
+
+var closeMessage = function() {
+  $('.message-block').removeClass('message-success');
+  $('.message-block').removeClass('message-error');
+  $('.message-block').hide();
 }
