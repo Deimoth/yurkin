@@ -2,6 +2,10 @@ var sqlite3 = require('sqlite3').verbose();
 var dbfile = 'mydb.db';
 var moment = require('moment');
 
+// default logging level is 'ALL' - everything is written to log
+// you may specify custom level as STRING parameter: (in order of criticality) FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL
+var logger = require('./logger').getLogger();
+
 // first initialize of database, use if needed
 var init = function() {
   var db = new sqlite3.Database(dbfile);
@@ -22,13 +26,13 @@ exports.initDB = function() {
 exports.createUser = function(fullname, login, password, admin, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "INSERT into USERS (fullname, login, password, admin, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", (SELECT max(id) from USERS) + 1)";
-  console.log(query);
+  logger.info(query);
   db.run(query, function(err, row) {
     if (err) {
       if (err.toString().indexOf('UNIQUE constraint failed: USERS.login') >= 0) {
         err = 'Ошибка: Неуникальное имя пользователя';
       }
-      console.log(err);
+      logger.error(err);
       return cb(err);
     }
     db.close();
@@ -43,11 +47,11 @@ exports.createUser = function(fullname, login, password, admin, cb) {
 exports.createWod = function(date, userId, content, comment, trainerId, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "INSERT into WODS (date, userid, content, comment, trainerid, id) values ('" + date + "'," + userId + ",'" + content + "','" + comment + "'," + trainerId + ", (SELECT max(id) from WODS) + 1)"
-  console.log(query);
+  logger.info(query);
   db.run(query, function(err, row) {
     if (err) {
       db.close();
-      console.log(err);
+      logger.error(err);
       return cb(err);
     }
     db.close();
@@ -60,9 +64,11 @@ exports.createWod = function(date, userId, content, comment, trainerId, cb) {
 exports.getUsers = function(cb) {
   var users = [];
   var db = new sqlite3.Database(dbfile);
+  logger.info("SELECT * FROM USERS");
   db.all("SELECT * FROM USERS", function(err, rows) {
     if (err) {
       db.close();
+      logger.error(err);
       return cb(err);
     }
     rows.forEach(function (row) {
@@ -79,6 +85,7 @@ exports.getUsers = function(cb) {
 exports.login = function(login, password, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "SELECT * from USERS where login = '" + login + "' and password = '" + password + "'";
+  logger.info(query);
   db.all(query, function(err, rows) {
     var res;
     var error;
@@ -86,16 +93,16 @@ exports.login = function(login, password, cb) {
     if (err) {
       res = false;
       error = err;
-      console.log('login as', login, 'FAIL: ', err);
+      logger.warn('login as', login, 'FAIL: ', err);
     }
     if (rows && rows.length == 1) {
       res = true;
       user = rows[0];
-      console.log('login as', login, 'success');
+      logger.info('login as', login, 'success');
     } else {
       res = false;
       error = "Неверный логин или пароль";
-      console.log('login as', login, 'FAIL: Wrong login or password');
+      logger.warn('login as', login, 'FAIL: Wrong login or password');
     }
     var result = {
       'result': res,
@@ -109,16 +116,13 @@ exports.login = function(login, password, cb) {
 
 exports.getWods = function(userId, period, cb) {
   var db = new sqlite3.Database(dbfile);
-  console.log('period', period);
   var endDate = moment().format('YYYY-MM-DD');
-  console.log('endDate', endDate);
   var startDate = moment().subtract(period, 'days').format('YYYY-MM-DD');
-  console.log('startDate', startDate);
   var query = "SELECT * from WODS where userId = " + userId + " and date between '" + startDate + "' and '" + endDate + "' order by date desc";
-  console.log(query);
+  logger.info(query);
   db.all(query, function(err, rows) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       db.close();
       return cb(err);
     }
@@ -136,15 +140,15 @@ exports.getWods = function(userId, period, cb) {
 exports.removeUser = function(login, cb) {
   var db = new sqlite3.Database(dbfile);
   var query = "DELETE from USERS where login = '" + login + "'";
-  console.log(query);
+  logger.info(query);
   db.run(query, function(err, rows) {
     if (err) {
       db.close();
-      console.log('FAILED to delete user', login, err);
+      logger.error('FAILED to delete user', login, err);
       return cb(err);
     } else {
       db.close();
-      console.log('user deleted', login);
+      logger.info('user deleted', login);
       return cb(true);
     }
   })
