@@ -21,21 +21,14 @@ exports.initDB = function(cb) {
             logger.error("initDB:", err);
             return cb(err);
           } else {
-            db.run("INSERT into USERS (fullname, login, password, admin, id) values ('admin', 'admin', '-576065321', 1, 1)", function(err, row) {
+            db.run("INSERT into USERS (fullname, login, password, admin, id) values ('admin', 'admin', '-576065321', 1, 1), ('Константин Юркин', 'yurkin', '-598857349', 1, 2)", function(err, row) {
               if (err) {
                 logger.error("initDB:", err);
                 return cb(err);
               } else {
-                db.run("INSERT into USERS (fullname, login, password, admin, id) values ('Константин Юркин', 'yurkin', '-598857349', 1, 2)", function(err, row) {
-                  if (err) {
-                    logger.error("initDB:", err);
-                    return cb(err);
-                  } else {
-                    db.close();
-                    logger.info("DB initialized successfully");
-                    return cb("DB initialized successfully");
-                  }
-                });
+                db.close();
+                logger.info("DB initialized successfully");
+                return cb("DB initialized successfully");
               }
             });
           }
