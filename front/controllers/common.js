@@ -2,6 +2,7 @@ var logout = function() {
   localStorage.removeItem('user.login');
   localStorage.removeItem('user.id');
   localStorage.removeItem('user.admin');
+  localStorage.removeItem('user.fullname');
   doGet('/logout', function(result) {
     window.location.href = '/login';
   })

@@ -30,12 +30,6 @@ app.get('/', function(req, res) {
   res.redirect('/mainpage');
 })
 
-app.get('/removeuser', function(req, res) {
-  db.removeUser(req.query.login, function(result) {
-    res.send(result);
-  })
-})
-
 app.get('/getUsers', function(req, res) {
   db.getUsers(function(result) {
     res.send(result);
@@ -101,6 +95,22 @@ app.get('/admin/viewWods', function(req, res) {
   } else {
     res.sendFile(adminViewWodsFile);
   }
+})
+
+app.get('/admin/removeuser', function(req, res) {
+  if (!req.session.user) {
+    res.sendFile(restrictedFile);
+  } else {
+    db.removeUser(req.query.login, function(result) {
+      res.send(result);
+    })
+  }
+})
+
+app.get('/admin/initialize', function(req, res) {
+  db.initDB(function(result) {
+    res.send(result);
+  })
 })
 
 // --- POSTS

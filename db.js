@@ -1,22 +1,51 @@
 var sqlite3 = require('sqlite3').verbose();
 var dbfile = 'mydb.db';
 var moment = require('moment');
+var fs = require('fs');
 
 // default logging level is 'ALL' - everything is written to log
 // you may specify custom level as STRING parameter: (in order of criticality) FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL
 var logger = require('./logger').getLogger();
 
-// first initialize of database, use if needed
-var init = function() {
-  var db = new sqlite3.Database(dbfile);
-  db.serialize(function() {
-    db.run("CREATE TABLE if not exists USERS (id INTEGER, fullname TEXT, login TEXT, password TEXT, admin INTEGER)");
-    db.run("CREATE TABLE if not exists WODS (id INTEGER, date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)")
-  });
-}
-
-exports.initDB = function() {
-  init();
+// first initialize of database, creates users: admin, yurkin
+exports.initDB = function(cb) {
+  if (!fs.existsSync('mydb.db')) {
+    var db = new sqlite3.Database(dbfile);
+    db.run("CREATE TABLE USERS (id INTEGER, fullname TEXT, login TEXT, password TEXT, admin INTEGER)", function(err, row) {
+      if (err) {
+        logger.error("initDB:", err);
+        return cb(err);
+      } else {
+        db.run("CREATE TABLE WODS (id INTEGER, date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)", function(err, row) {
+          if (err) {
+            logger.error("initDB:", err);
+            return cb(err);
+          } else {
+            db.run("INSERT into USERS (fullname, login, password, admin, id) values ('admin', 'admin', '-576065321', 1, 1)", function(err, row) {
+              if (err) {
+                logger.error("initDB:", err);
+                return cb(err);
+              } else {
+                db.run("INSERT into USERS (fullname, login, password, admin, id) values ('Константин Юркин', 'yurkin', '-598857349', 1, 2)", function(err, row) {
+                  if (err) {
+                    logger.error("initDB:", err);
+                    return cb(err);
+                  } else {
+                    db.close();
+                    logger.info("DB initialized successfully");
+                    return cb("DB initialized successfully");
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else {
+    logger.error("ERROR: DB already initialized");
+    return cb("ERROR: DB already initialized");
+  }
 }
 
 // create user function. params:
