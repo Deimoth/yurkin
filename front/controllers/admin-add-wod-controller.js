@@ -17,6 +17,7 @@ var addWod = function() {
   var date = $("input[id='date']")[0].value;
   var content = $("textarea[id='wod_content']")[0].value;
   var comment = $("textarea[id='wod_comment']")[0].value;
+  $('#addWod_button')[0].disabled = true;
   if (content.length == 0 || date.length == 0) {
     $('.message-block').show();
     $('.message-block').addClass('message-error');
@@ -33,14 +34,15 @@ var addWod = function() {
     if (result == "OK") {
       result_message = 'Добавлен WOD';
       userIndex = 0;
-      content = '';
-      comment = '';
+      $('#wod_content')[0].value = '';
+      $('#wod_comment')[0].value = '';
     } else {
       result_message = result;
     }
     $('.message-block').show();
     $('.message-block').addClass('message-success');
     $("span[id='result_message']")[0].innerHTML = result_message;
+    $('#addWod_button')[0].disabled = false;
   })
 }
 

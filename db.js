@@ -9,24 +9,29 @@ var logger = require('./logger').getLogger();
 
 // first initialize of database, creates users: admin, yurkin
 exports.initDB = function(cb) {
+  logger.info("DB init started");
   if (!fs.existsSync('mydb.db')) {
+    logger.info("file mydb.db doesn't exist, creating new");
     var db = new sqlite3.Database(dbfile);
-    db.run("CREATE TABLE USERS (id INTEGER, fullname TEXT, login TEXT, password TEXT, admin INTEGER)", function(err, row) {
+    db.run("CREATE TABLE USERS (id INTEGER NOT NULL, fullname TEXT, login TEXT NOT NULL UNIQUE, password TEXT NOT NULL, admin INTEGER, active INTEGER, deleted INTEGER)", function(err, row) {
       if (err) {
         logger.error("initDB:", err);
         return cb(err);
       } else {
+        logger.info('table USERS added');
         db.run("CREATE TABLE WODS (id INTEGER, date INTEGER, userid INTEGER, content BLOB, comment BLOB, trainerid INTEGER)", function(err, row) {
           if (err) {
             logger.error("initDB:", err);
             return cb(err);
           } else {
-            db.run("INSERT into USERS (fullname, login, password, admin, id) values ('admin', 'admin', '-576065321', 1, 1), ('Константин Юркин', 'yurkin', '-598857349', 1, 2)", function(err, row) {
+            logger.info('table WODS added');
+            db.run("INSERT into USERS (id, fullname, login, password, admin, active, deleted) values (1, 'admin', 'admin', '92668751', 1, 1, 0)", function(err, row) {
               if (err) {
                 logger.error("initDB:", err);
                 return cb(err);
               } else {
                 db.close();
+                logger.info('user admin/admin added');
                 logger.info("DB initialized successfully");
                 return cb("DB initialized successfully");
               }
@@ -42,12 +47,12 @@ exports.initDB = function(cb) {
 }
 
 // create user function. params:
-// fullname, login (UNIQUE), password, admin (1/0) - fields
+// fullname, login (UNIQUE), password, admin (1/0), active (1/0), deleted (1/0) - fields
 // cb - callback function
 // id will be generated automatically
 exports.createUser = function(fullname, login, password, admin, cb) {
   var db = new sqlite3.Database(dbfile);
-  var query = "INSERT into USERS (fullname, login, password, admin, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", (SELECT max(id) from USERS) + 1)";
+  var query = "INSERT into USERS (fullname, login, password, admin, active, deleted, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", 1, 0, (SELECT max(id) from USERS) + 1)";
   logger.info(query);
   db.run(query, function(err, row) {
     if (err) {
@@ -86,8 +91,9 @@ exports.createWod = function(date, userId, content, comment, trainerId, cb) {
 exports.getUsers = function(cb) {
   var users = [];
   var db = new sqlite3.Database(dbfile);
-  logger.info("SELECT * FROM USERS");
-  db.all("SELECT * FROM USERS", function(err, rows) {
+  var query = "SELECT * FROM USERS where active = 1 and deleted = 0";
+  logger.info(query);
+  db.all(query, function(err, rows) {
     if (err) {
       db.close();
       logger.error(err);
@@ -161,7 +167,7 @@ exports.getWods = function(userId, period, cb) {
 
 exports.removeUser = function(login, cb) {
   var db = new sqlite3.Database(dbfile);
-  var query = "DELETE from USERS where login = '" + login + "'";
+  var query = "UPDATE USERS set deleted = 1 where login = '" + login + "'";
   logger.info(query);
   db.run(query, function(err, rows) {
     if (err) {
@@ -170,7 +176,24 @@ exports.removeUser = function(login, cb) {
       return cb(err);
     } else {
       db.close();
-      logger.info('user deleted', login);
+      logger.info('user marked as deleted:', login);
+      return cb(true);
+    }
+  })
+}
+
+exports.setUserNotActive = function(login, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "UPDATE USERS set active = 0 where login = '" + login + "'";
+  logger.info(query);
+  db.run(query, function(err, rows) {
+    if (err) {
+      db.close();
+      logger.error('FAILED to deactivate user', login, err);
+      return cb(err);
+    } else {
+      db.close();
+      logger.info('user marked as non-active:', login);
       return cb(true);
     }
   })
