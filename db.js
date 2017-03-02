@@ -112,7 +112,7 @@ exports.getUsers = function(cb) {
 // password - as HASH
 exports.login = function(login, password, cb) {
   var db = new sqlite3.Database(dbfile);
-  var query = "SELECT * from USERS where login = '" + login + "' and password = '" + password + "'";
+  var query = "SELECT * from USERS where login = '" + login + "' and password = '" + password + "' and active = 1 and deleted = 0";
   logger.info(query);
   db.all(query, function(err, rows) {
     var res;
