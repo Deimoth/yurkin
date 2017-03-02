@@ -23,7 +23,7 @@ var adminAddWodFile = __dirname + '/front/views/admin/admin-add-wod.html';
 var adminAddUserFile = __dirname + '/front/views/admin/admin-add-user.html';
 var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html';
 var restrictedFile = __dirname + '/front/views/restricted.html';
-var defaultPort = 8080;
+var defaultPort = 80;
 
 // --- GETS
 app.get('/', function(req, res) {

@@ -1,3 +1,5 @@
 node_modules/
 all.log
 mydb.db
+/.idea/
+/yurkin.iml
