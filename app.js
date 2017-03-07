@@ -3,6 +3,7 @@ var app = express();
 var db = require('./db');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var logger = require('./logger').getLogger();
 
 // --- USES
 app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -148,6 +149,10 @@ app.post('/getWods', function(req, res) {
 })
 
 // --- SERVER
-app.listen(defaultPort, function() {
-  console.log('server run on port ' + defaultPort);
-});
+try {
+  app.listen(defaultPort, function() {
+    logger.info('server run on port ' + defaultPort);
+  });
+} catch (e) {
+  logger.error(e);
+}
