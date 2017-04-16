@@ -46,6 +46,27 @@ exports.initDB = function(cb) {
   }
 }
 
+exports.initDBaddMoves = function(cb) {
+  var db = new sqlite3.Database(dbfile);
+  logger.info("adding MOVES table");
+  db.run("CREATE TABLE MOVES (id INTEGER NOT NULL, name TEXT)", function(err, row) {
+    if (err) {
+      logger.error(err);
+      return cb(err);
+    } else {
+      logger.info("table MOVES added");
+      db.run("INSERT into MOVES (id, name) values (1, 'Отжимания от пола')"), function(err, row) {
+        if (err) {
+          logger.error(err);
+          return cb(err);
+        } else {
+          return cb("table MOVES added");
+        }
+      }
+    }
+  });
+}
+
 // create user function. params:
 // fullname, login (UNIQUE), password, admin (1/0), active (1/0), deleted (1/0) - fields
 // cb - callback function
@@ -86,6 +107,21 @@ exports.createWod = function(date, userId, content, comment, trainerId, cb) {
   })
 }
 
+exports.createMove = function(name, cb) {
+  var db = new sqlite3.Database(dbfile);
+  var query = "INSERT into MOVES (name, id) values ('" + name + "', (SELECT max(id) from MOVES) + 1)"
+  logger.info(query);
+  db.run(query, function(err, row) {
+    if (err) {
+      db.close();
+      logger.error(err);
+      return cb(err);
+    }
+    db.close();
+    return cb("OK");
+  })
+}
+
 // get all users
 // cb - callback function
 exports.getUsers = function(cb) {
@@ -104,6 +140,25 @@ exports.getUsers = function(cb) {
     });
     db.close();
     return cb(users);
+  });
+}
+
+exports.getMoves = function(cb) {
+  var moves = [];
+  var db = new sqlite3.Database(dbfile);
+  var query = "SELECT * FROM MOVES order by name";
+  logger.info(query);
+  db.all(query, function(err, rows) {
+    if (err) {
+      db.close();
+      logger.error(err);
+      return cb(err);
+    }
+    rows.forEach(function (row) {
+      moves.push(row);
+    });
+    db.close();
+    return cb(moves);
   });
 }
 

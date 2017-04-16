@@ -64,6 +64,18 @@ Date.prototype.toDateInputValue = (function() {
     return local.toJSON().slice(0,10);
 });
 
+var WOD = function(type, limit, exersises) {
+  this.type = type;
+  this.limit = limit;
+  this.exersises = exersises;
+}
+
+var Exersise = function(name, reps, weight) {
+  this.name = name;
+  this.reps = reps;
+  this.weight = weight;
+}
+
 $(window).load(function(){
   scrollBoxSetHeight();
 })

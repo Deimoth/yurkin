@@ -24,6 +24,7 @@ var adminAddWodFile = __dirname + '/front/views/admin/admin-add-wod.html';
 var adminAddUserFile = __dirname + '/front/views/admin/admin-add-user.html';
 var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html';
 var restrictedFile = __dirname + '/front/views/restricted.html';
+var adminAddMoveFile = __dirname + '/front/views/admin/admin-add-move.html';
 var defaultPort = 8768;
 
 // --- GETS
@@ -35,6 +36,12 @@ app.get('/getUsers', function(req, res) {
   db.getUsers(function(result) {
     res.send(result);
   });
+})
+
+app.get('/getMoves', function(req, res) {
+  db.getMoves(function(result) {
+    res.send(result);
+  })
 })
 
 app.get('/login', function(req, res) {
@@ -98,6 +105,16 @@ app.get('/admin/viewWods', function(req, res) {
   }
 })
 
+app.get('/admin/addMove', function(req, res) {
+  if (!req.session.user) {
+    res.redirect('/login');
+  } else if (req.session.user.admin != 1) {
+    res.sendFile(restrictedFile);
+  } else {
+    res.sendFile(adminAddMoveFile);
+  }
+})
+
 app.get('/admin/removeuser', function(req, res) {
   if (!req.session.user) {
     res.sendFile(restrictedFile);
@@ -110,6 +127,12 @@ app.get('/admin/removeuser', function(req, res) {
 
 app.get('/admin/initialize', function(req, res) {
   db.initDB(function(result) {
+    res.send(result);
+  })
+})
+
+app.get('/admin/initialize/addMoves', function(req, res) {
+  db.initDBaddMoves(function(result) {
     res.send(result);
   })
 })
@@ -134,6 +157,14 @@ app.post('/createUser', function(req, res) {
 
 app.post('/createWod', function(req, res) {
   db.createWod(req.body.date, req.body.userId, req.body.content, req.body.comment, req.body.trainerid, function(result) {
+    if (result) {
+      res.send(result);
+    }
+  })
+})
+
+app.post('/createMove', function(req, res) {
+  db.createMove(req.body.name, function(result) {
     if (result) {
       res.send(result);
     }
