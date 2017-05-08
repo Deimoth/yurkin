@@ -1,0 +1,54 @@
+<head>
+  <title>Constantin Yurkin Team - Админка - добавить движение</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/front/controllers/utils.js"></script>
+    <script type="text/javascript" src="/front/controllers/common.js"></script>
+    <script type="text/javascript" src="/front/controllers/admin-add-move-controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/front/styles/font-awesome.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/fonts/lato.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/styles/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/front/styles/common.css" media="screen" />
+</head>
+<body>
+  <div class="login_bg"></div>
+  <div id="header" class="header">
+    <div class="header_login-panel">
+      <a href onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Выйти</a>
+      <span id="login_user_name"></span>
+    </div>
+    <div class="admin_menu hidden-xs">
+      <a href="/admin/addWod"  class="active"><i class="fa fa-file" aria-hidden="true"></i>Добавить WOD</a>
+      <a href="/admin/addMove"  class="active"><i class="fa fa-file" aria-hidden="true"></i>Добавить движение</a>
+      <a href="/admin/addUser"><i class="fa fa-user-plus" aria-hidden="true"></i>Добавить пользователя</a>
+      <a href="/admin/viewWods"><i class="fa fa-list-alt" aria-hidden="true"></i>Просмотр WOD'ов</a>
+    </div>
+  </div>
+  <div class="menu-mobile admin_menu visible-xs">
+    <a href="/admin/addWod" title="Добавить WOD"  class="active"><i class="fa fa-file" aria-hidden="true"></i></a>
+    <a href="/admin/addMove" title="Добавить движение"  class="active"><i class="fa fa-file" aria-hidden="true"></i></a>
+    <a href="/admin/addUser" title="Добавить пользователя"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+    <a href="/admin/viewWods" title="Просмотр WOD'ов"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+  </div>
+
+  <h1 class="page_title">Новое движение</h1>
+
+  <div id="add_move_form" class="add_user_form">
+    <table class="moves_table">
+      <tbody>
+        <tr>
+          <td>
+            <input id="move_name" type="text" placeholder="Движение" />
+          </td>
+          <td>
+            <input id="addMove_button" type="button" onclick="addMove()" value="Добавить" class="button_add" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="message-block">
+    <span id="result_message"></span>
+    <span id="error_message" class="error"></span>
+    <i class="fa fa-close" aria-hidden="true" onclick="closeMessage()"></i>
+  </div>
+</body>
