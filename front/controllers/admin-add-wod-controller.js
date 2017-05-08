@@ -1,3 +1,5 @@
+var wod = new WOD('', '', []);
+
 var afterLoad = function() {
   $('#date').val(new Date().toDateInputValue());
   var usersList = $("select[id='users_list']")[0];
@@ -7,6 +9,51 @@ var afterLoad = function() {
       usersList.options[i] = new Option(list[i].fullname + ' (' + list[i].login + ')', list[i].id);
     }
   })
+
+  doGet('/getMoves', function(moves) {
+    var movesList = $("select[id='moves_list']")[0];
+    if (moves) {
+      var list = JSON.parse(moves);
+      for (var i = 0; i < list.length; i++) {
+        movesList.options[i] = new Option(list[i].name, list[i].name);
+      }
+    }
+  })
+}
+
+var addExersise = function() {
+  var moveIdx = $("select[id='moves_list']")[0].selectedIndex;
+  var move = $("select[id='moves_list']")[0].options[moveIdx].value;
+  var reps = $("input[id='reps']")[0].value;
+  var weight = $("input[id='weight']")[0].value;
+  var exString = move + ' ' + reps;
+  if (weight && weight.length > 0) {
+    exString += ' x ' + weight;
+  }
+  wod.exersises.push(exString);
+  refreshWodTextArea();
+}
+
+var addWodType = function() {
+  var wodTypeIdx = $("select[id='wodTypes_list']")[0].selectedIndex;
+  var wodType = $("select[id='wodTypes_list']")[0].options[wodTypeIdx].value;
+  wod.type = wodType;
+  refreshWodTextArea();
+}
+
+var addWodLimit = function() {
+  var wodLimit = $("input[id='wodLimit']")[0].value;
+  wod.limit = wodLimit;
+  refreshWodTextArea();
+}
+
+var refreshWodTextArea = function() {
+  var parsedWod = '';
+  parsedWod += wod.type + ' ' + wod.limit + ' \n';
+  wod.exersises.forEach(function(ex) {
+    parsedWod += ex + '\n';
+  })
+  $("textarea[id='wod_content']")[0].value = parsedWod;
 }
 
 var addWod = function() {
@@ -46,13 +93,17 @@ var addWod = function() {
   })
 }
 
+var manualEdit = function() {
+  var manual_edit_checkbox = $("input[id='manual_edit_checkbox']")[0];
+  var wod_content = $("textarea[id='wod_content']")[0];
+  if (manual_edit_checkbox.checked) {
+    wod_content.readOnly = false;
+  } else {
+    wod_content.readOnly = true;
+  }
+}
+
 window.onload = function() {
   commonAfterLoad();
   afterLoad();
-}
-
-var closeMessage = function() {
-  $('.message-block').removeClass('message-success');
-  $('.message-block').removeClass('message-error');
-  $('.message-block').hide();
 }

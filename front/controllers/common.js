@@ -88,3 +88,9 @@ var scrollBoxSetHeight = function() {
   var calHeigh = $(window).innerHeight() - $('.header').outerHeight() - $('.page_title').outerHeight() - 130;
   $('.scroll-box').css('height', calHeigh + 'px')
 }
+
+var closeMessage = function() {
+  $('.message-block').removeClass('message-success');
+  $('.message-block').removeClass('message-error');
+  $('.message-block').hide();
+}

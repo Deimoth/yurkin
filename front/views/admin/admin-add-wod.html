@@ -67,12 +67,75 @@
             <tbody>
               <tr>
                 <td>
-                  <label for="wod_content">Тренировка</label>
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="wodTypes_list">Тип тренировки:</label>
+                      </td>
+                      <td>
+                        <select id="wodTypes_list" onchange="addWodType()">
+                          <option />
+                          <option value="AFAP">AFAP</option>
+                          <option value="AMRAP">AMRAP</option>
+                          <option value="EMOM">EMOM</option>
+                          <option value="Силовая">Силовая</option>
+                          <option value="Кардио">Кардио</option>
+                        </select>
+                      </td>
+                      <td colspan="2">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="wodLimit">Время/лимит:</label>
+                      </td>
+                      <td>
+                        <input id="wodLimit" type="text" onkeyup="addWodLimit()" />
+                      </td>
+                      <td colspan="2">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="moves_list">Упражнение:</label>
+                      </td>
+                      <td>
+                        <label for="reps">Повторения:</label>
+                      </td>
+                      <td>
+                        <label for="weight">Вес:</label>
+                      </td>
+                      <td>
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <select id="moves_list">
+                        </select>
+                      </td>
+                      <td>
+                        <input id="reps" type="text" />
+                      </td>
+                      <td>
+                        <input id="weight" type="text" />
+                      </td>
+                      <td>
+                        <input id="addExersise_button" type="button" onclick="addExersise()" value="+" class="button_add" style="margin: 0;"/>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <textarea id="wod_content" type="text" rows="16" cols="60"></textarea>
+                  <label for="wod_content">Тренировка</label><br />
+                  <input type="checkbox" id="manual_edit_checkbox" onchange="manualEdit()"><label>Ручное редактирование</label></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea id="wod_content" type="text" rows="16" cols="60" readonly="true"></textarea>
                 </td>
               </tr>
               <tr>
