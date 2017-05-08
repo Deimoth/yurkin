@@ -83,6 +83,7 @@ var addWod = function() {
       userIndex = 0;
       $('#wod_content')[0].value = '';
       $('#wod_comment')[0].value = '';
+      wod = new WOD('', '', []);
     } else {
       result_message = result;
     }
