@@ -71,9 +71,9 @@ exports.initDBaddMoves = function(cb) {
 // fullname, login (UNIQUE), password, admin (1/0), active (1/0), deleted (1/0) - fields
 // cb - callback function
 // id will be generated automatically
-exports.createUser = function(fullname, login, password, admin, cb) {
+exports.createUser = function(fullname, login, password, admin, active, cb) {
   var db = new sqlite3.Database(dbfile);
-  var query = "INSERT into USERS (fullname, login, password, admin, active, deleted, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", 1, 0, (SELECT max(id) from USERS) + 1)";
+  var query = "INSERT into USERS (fullname, login, password, admin, active, deleted, id) values ('" + fullname + "','" + login + "','" + password + "'," + admin + ", " + active + ", 0, (SELECT max(id) from USERS) + 1)";
   logger.info(query);
   db.run(query, function(err, row) {
     if (err) {

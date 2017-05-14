@@ -34,3 +34,27 @@ var closeMessage = function() {
   $('.message-block').removeClass('message-error');
   $('.message-block').hide();
 }
+
+var afterLoad = function() {
+  $('#register_form').hide();
+  $('#login_form').show();
+}
+
+var switchTab = function(tab) {
+  switch (tab) {
+    case 'login':
+      $('#register_form').hide();
+      $('#login_form').show();
+      break;
+    case 'register':
+      $('#register_form').show();
+      $('#login_form').hide();
+      break;
+    default:
+      break;
+  }
+}
+
+window.onload = function() {
+  afterLoad();
+}

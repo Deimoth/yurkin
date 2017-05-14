@@ -28,8 +28,11 @@
           </div>
         </div>
         <div class="col-lg-offset-2 col-lg-6 col-md-8 col-sm-12">
+          <div class="login_form" id="login_buttons">
+            <input type="button_switch" onclick="switchTab('login')" value="Войти" class="button_switch" />
+            <input type="button_switch" onclick="switchTab('register')" value="Зарегистрироваться" class="button_switch" />
+          </div>
           <div class="login_form" id="login_form">
-            <h2>Не пропусти свои тренировки</h2>
             <div class="from_body">
               <input id="login_text" type="text" placeholder="Логин" />
               <input id="password_text" type="password" placeholder="Пароль" />
@@ -38,12 +41,22 @@
               <input id="login_button" type="submit" onclick="login()" value="Войти" class="button" />
             </footer>
           </div>
+          <div class="login_form" id="register_form">
+            <div class="from_body">
+              <input id="login_text" type="text" placeholder="Логин" />
+              <input id="password_text" type="password" placeholder="Пароль" />
+              <input id="email_text" type="text" placeholder="E-mail" />
+            </div>
+            <footer>
+              <input id="register_button" type="submit" onclick="register()" value="Зарегистрироваться" class="button" />
+            </footer>
+          </div>
         </div>
       </div>
       </div>
     </div>
     <div class="message-block">
-      <span id="result_message" class="error"></span>
+      <span id="result_message"></span>
       <i class="fa fa-close" aria-hidden="true" onclick="closeMessage()"></i>
     </div>
   </body>

@@ -34,6 +34,22 @@ input {
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
+.button_switch {
+  box-shadow: rgb(255, 255, 255) 0px 1px 0px 0px inset;
+  background: linear-gradient(rgb(249, 249, 249) 5%, rgb(233, 233, 233) 100%) rgb(249, 249, 249);
+  border-radius: 6px;
+  border: 1px solid rgb(220, 220, 220);
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(102, 102, 102);
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
 .login_form {
   position: absolute;
   margin-left: 30%;
@@ -61,7 +77,7 @@ input {
   text-align: center;
 }
 
-.view_wods_form {  
+.view_wods_form {
   max-width: 100%;
 }
 
@@ -450,7 +466,7 @@ body::before {
   opacity: .3;
   z-index: -1;
   filter: blur(20px) grayscale(20%);
-  
+
 }
 
 .login_form h2 {
@@ -491,6 +507,21 @@ body::before {
   text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
 }
 
+.login_form input[type="button_switch"] {
+  border-radius: 2px;
+  background-color: #080808;
+  background: #080808;
+  background: linear-gradient(90deg, #080808 0%, #111111 80%);
+  color: #FFF;
+  border: none;
+  text-transform: uppercase;
+  font-size: 16px;
+  -webkit-box-shadow: inset 0px 0px 2px 0px #080809;
+  -moz-box-shadow: inset 0px 0px 2px 0px #080809;
+  box-shadow: inset 0px 0px 2px 0px #080809;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
+}
+
 .form_error {
   position: absolute;
   bottom: -60px;
@@ -519,7 +550,7 @@ body::before {
   opacity: .05;
   z-index: -1;
   filter: blur(10px);
-  
+
 }
 
 .login_adv h1 {

@@ -148,7 +148,7 @@ app.post('/login', function(req, res) {
 })
 
 app.post('/createUser', function(req, res) {
-  db.createUser(req.body.fullname, req.body.login, req.body.password, req.body.admin, function(result) {
+  db.createUser(req.body.fullname, req.body.login, req.body.password, req.body.admin, req.body.active, function(result) {
     if (result) {
       res.send(result);
     }
