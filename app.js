@@ -25,7 +25,7 @@ var adminAddUserFile = __dirname + '/front/views/admin/admin-add-user.html';
 var adminViewWodsFile = __dirname + '/front/views/admin/admin-view-wods.html';
 var restrictedFile = __dirname + '/front/views/restricted.html';
 var adminAddMoveFile = __dirname + '/front/views/admin/admin-add-move.html';
-var defaultPort = 8768;
+var defaultPort = 8787;
 
 // --- GETS
 app.get('/', function(req, res) {
