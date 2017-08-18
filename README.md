@@ -7,3 +7,4 @@ how to start:
 2. npm start
 3. admin/admin
 4. {yourhost}:{yourport}/admin/initialize - to create database
+5. {yourhost}:{yourport}/admin/initialize/addMoves - to add some features
